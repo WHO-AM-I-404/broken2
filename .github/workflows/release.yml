@@ -3,27 +3,27 @@ name: Release Build
 on:
   push:
     tags:
-      - '*'
+      - 'v*.*.*'
 
 jobs:
   build-windows:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Configure CMake
-        run: cmake -B build -G "Visual Studio 16 2019" -A x64
+    - name: Configure CMake
+      run: cmake -B build -G "Visual Studio 17 2022" -A x64
 
-      - name: Build
-        run: cmake --build build --config Release --target GlitchSimulator
+    - name: Build
+      run: cmake --build build --config Release --target GlitchSimulator
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: build/Release/GlitchSimulator.exe
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/Release/GlitchSimulator.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
